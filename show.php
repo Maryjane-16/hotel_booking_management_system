@@ -1,3 +1,38 @@
+<?php
+
+require_once "includes/db_connect.php";
+
+/**
+ *  Reading out a specific data from the database
+ */
+
+ $id = $_GET['id'];
+
+ //connect our db
+$conn = connectDB();
+
+
+// fetches a specific booking_records by its id
+$sql = "SELECT * FROM booking_records WHERE id = ?";
+
+// prepare an SQL statement for execution
+$stmt = mysqli_prepare($conn, $sql);
+
+// bind variables for the parameter markers in the SQL statement prepared
+mysqli_stmt_bind_param($stmt, 'i', $id);
+
+//execute the prepared statement
+$results = mysqli_stmt_execute($stmt);
+
+//get a result set from a prepared statement as an object
+$get_result = mysqli_stmt_get_result($stmt);
+
+// $data = mysqli_fetch_array($get_result, MYSQLI_ASSOC);
+$data = mysqli_fetch_assoc($get_result);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,39 +53,39 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Full Name:</strong>
-            <p>John Doe</p>
+            <p><?= $data['full_name'] ?></p>
           </div>
           <div class="col-md-6">
             <strong>Email:</strong>
-            <p>johndoe@example.com</p>
+            <p><?= $data['email'] ?></p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Phone:</strong>
-            <p>123-456-7890</p>
+            <p><?= $data['phone_number'] ?></p>
           </div>
           <div class="col-md-6">
             <strong>Room Type:</strong>
-            <p>Deluxe</p>
+            <p><?= $data['room_type'] ?></p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Check-in Date:</strong>
-            <p>2025-06-01</p>
+            <p><?= $data['check_in_date'] ?></p>
           </div>
           <div class="col-md-6">
             <strong>Check-out Date:</strong>
-            <p>2025-06-05</p>
+            <p><?= $data['check_out_date'] ?></p>
           </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-between mt-4">
-          <a href="index.php" class="btn btn-secondary">Back</a>
+          <a href="index_records.php" class="btn btn-secondary">Back</a>
           <a href="delete_booking.php?id=1" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a>
         </div>
 

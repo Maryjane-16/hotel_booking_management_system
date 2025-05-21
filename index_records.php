@@ -1,3 +1,37 @@
+<?php
+
+require_once "includes/db_connect.php";
+
+$conn = connectDB();
+
+// Reading all records from the database
+$sql = "SELECT * FROM booking_records";
+
+$results = mysqli_query($conn, $sql);
+
+if ($results === false) {
+    echo mysqli_error($conn);
+} else {
+    $all_data = mysqli_fetch_all($results, MYSQLI_ASSOC);
+}
+
+// Clearing all records at once from the database
+if (isset($_POST['clear_booking_records'])) {
+
+    $sql = 'TRUNCATE TABLE booking_records';
+    mysqli_query($conn, $sql);
+
+    header("Location: http://localhost:200/index_records.php");
+    exit;
+}
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,39 +53,52 @@
                     <table class="table table-striped table-bordered align-middle">
                         <thead class="table-dark text-center">
                             <tr>
+                                <th>#</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Room Type</th>
-                                <th>Check-in Date</th>
-                                <th>Check-out Date</th>
+                                <th>Check_in Date</th>
+                                <th>Check_out Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Replace this with PHP dynamic rows -->
-                        <tbody class="text-center">
-                            <tr>
-                                <td>John Doe</td>
-                                <td>johndoe@example.com</td>
-                                <td>123-456-7890</td>
-                                <td>Deluxe</td>
-                                <td>2025-06-01</td>
-                                <td>2025-06-05</td>
-                                <td>
-                                    <!-- Action Buttons -->
-                                     <button class="btn btn-sm btn-secondary">Show</button>
-                                    <button class="btn btn-sm btn-warning">Update</button>
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <?php if (!empty($all_data)): ?>
+                            <tbody>
+
+                                <!-- Replace this with PHP dynamic rows -->
+                            <tbody class="text-center">
+                                <?php foreach ($all_data as $index => $data): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($data['id']) ?></td>
+                                        <td><?= htmlspecialchars($data['full_name']) ?></td>
+                                        <td><?= htmlspecialchars($data['email']) ?></td>
+                                        <td><?= htmlspecialchars($data['phone_number']) ?></td>
+                                        <td><?= htmlspecialchars($data['room_type']) ?></td>
+                                        <td><?= htmlspecialchars($data['check_in_date']) ?></td>
+                                        <td><?= htmlspecialchars($data['check_out_date']) ?></td>
+                                        <td>
+                                            <!-- Action Buttons -->
+                                            <a class="btn btn-sm btn-secondary" href="show.php?id=<?= $data['id'] ?>">Show</a>
+                                            <a class="btn btn-sm btn-warning" href="edit.php?id=<?= $data['id'] ?>">Update</a>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        <?php else: ?>
+                            <p>No booking records found.</p>
+                        <?php endif; ?>
                     </table>
                 </div>
                 <!-- Footer Buttons -->
-                <div class="text-center mt-4">
-                    <a href="create_booking.php" class="btn btn-sm btn-success">Create New Booking</a>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="/index.php" class="btn btn-sm btn-success">Create New Booking</a>
+                    <form method="POST" class="m-0">
+                        <button type="submit" name="clear_booking_records" class="btn btn-sm btn-primary">Clear Booking Records</button>
+                    </form>
                 </div>
+
             </div>
         </div>
     </div>
