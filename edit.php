@@ -1,3 +1,43 @@
+<?php
+
+require_once "includes/db_connect.php";
+require_once "includes/get_booking_record_id.php";
+
+
+$id = $_GET['id'];
+
+ //connect our db
+$conn = connectDB();
+
+if (isset($_GET['id'])){
+  $data = getBookingRecordById($conn, $id);
+
+  //You can also handle the case where no record is found in the specified ID
+  if (!$data) {
+    echo require_once "includes/no_booking_record.php";
+    exit;
+  }
+
+
+ if($data){
+  $full_name = $data['full_name'];
+  $email = $data['email'];
+  $phone_number = $data['phone_number'];
+  $room_type = $data['room_type'];
+  $check_in_date = $data['check_in_date'];
+  $check_out_date = $data['check_out_date'];
+  $image_file = $data['image_file'];
+ }
+} else {
+  //You can also handle the case where no ID is in the URL
+  echo require_once "includes/invalid_request.php";
+  exit;
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,48 +59,49 @@
 
             <form method="POST" enctype="multipart/form-data">
               <div class="mb-3 form-floating">
-                <input type="text" class="form-control" id="fullName" placeholder="Full Name" required>
+                <input type="text" class="form-control" id="fullName" placeholder="Full Name" value="<?= $full_name ?>" required>
                 <label for="fullName">Full Name</label>
               </div>
 
               <div class="mb-3 form-floating">
-                <input type="email" class="form-control" id="email" placeholder="Email address" required>
+                <input type="email" class="form-control" id="email" placeholder="Email address" value="<?= $email ?>" required>
                 <label for="email">Email address</label>
               </div>
 
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. 123-456-7890" required>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. 123-456-7890" value="<?= $phone_number ?>" required>
               </div>
 
               <div class="mb-3">
-                <label for="roomType" class="form-label">Room Type</label>
-                <input class="form-control" list="roomOptions" id="roomType" placeholder="Type to search..." required>
-                <datalist id="roomOptions">
-                  <option value="Single Room">
-                  <option value="Double Room">
-                  <option value="Suite">
-                  <option value="Family Room">
-                  <option value="Deluxe">
-                  <option value="Executive Room">
-                  <option value="Presidential Room">
-                </datalist>
-              </div>
+                <label for="roomType" class="form-label">Room Type</label>  
+                <select class="form-control" id="roomType" name="room_type" required>
+                 
+                <?php
+                $Room_types = ['Single Room', 'Double Room', 'Suite', 'Family Room', 'Deluxe', 'Executive Room', 'Presidential Room'];
+
+                foreach($Room_types as $room){
+                  $selected = ($room === $room_type) ? 'selected': '';
+                  echo "<option value='$room' $selected>$room</option>";
+                }
+                ?>
+                </select>
+                </div>
 
               <div class="mb-3 form-floating">
-                <input type="date" class="form-control" id="checkin" placeholder="Check-in Date" required>
+                <input type="date" class="form-control" id="checkin" placeholder="Check-in Date"  value="<?= $check_in_date ?>" required>
                 <label for="checkin">Check-in Date</label>
               </div>
 
               <div class="mb-4 form-floating">
-                <input type="date" class="form-control" id="checkout" placeholder="Check-out Date" required>
+                <input type="date" class="form-control" id="checkout" placeholder="Check-out Date"  value="<?= $check_out_date ?>" required>
                 <label for="checkout">Check-out Date</label>
               </div>
 
               <!-- upload image-->
               <div class="mb-4">
                 <label for="file">Upload Image:</label>
-                <input type="file" name="file" id="file">
+                <input type="file" name="file" id="file"  value="<?= $image_file ?>">
               </div>
 
               <!-- submit button-->
