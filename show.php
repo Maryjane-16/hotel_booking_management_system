@@ -3,6 +3,8 @@
 require_once "includes/db_connect.php";
 require_once "includes/get_booking_record_id.php";
 
+session_start();
+
 /**
  *  Reading out a specific data from the database
  */
@@ -33,6 +35,16 @@ $conn = connectDB();
     <div class="card shadow-lg rounded-4">
       <div class="card-body p-5">
         <h2 class="text-center mb-4">Booking Details</h2>
+
+
+        <!--show success message -->
+            <?php if (isset($_SESSION['success_message'])): ?>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $_SESSION['success_message']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <?php unset($_SESSION['success_message']); ?>
+            <?php endif; ?>
 
         <!-- Booking Info -->
         <div class="row mb-3">
@@ -70,8 +82,8 @@ $conn = connectDB();
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-between mt-4">
-          <a href="index_records.php" class="btn btn-secondary">Back</a>
-          <a href="delete_booking.php?id=1" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?');">Delete</a>
+          <a href="index_records.php" class="btn btn-secondary btn-sm">Back</a>
+          <a href="delete.php?id=<?= $id ?>" class="btn btn-danger btn-sm">Delete</a>
         </div>
 
       </div>

@@ -81,7 +81,7 @@ if (isset($_POST['clear_booking_records'])) {
                                             <!-- Action Buttons -->
                                             <a class="btn btn-sm btn-secondary" href="show.php?id=<?= $data['id'] ?>">Show</a>
                                             <a class="btn btn-sm btn-warning" href="edit.php?id=<?= $data['id'] ?>">Update</a>
-                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                            <a class="btn btn-sm btn-danger" href="delete.php?id=<?= $data['id'] ?>">Delete</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

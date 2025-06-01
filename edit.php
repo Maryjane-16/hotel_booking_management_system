@@ -3,11 +3,18 @@
 require_once "includes/db_connect.php";
 require_once "includes/get_booking_record_id.php";
 
+session_start();
+
 
 $id = $_GET['id'];
 
  //connect our db
 $conn = connectDB();
+
+/**
+ *  READING OR RETRIEVING SPECIFIC DATABFROMNTHE DATABASE IN THE EDIT PAGE
+ */
+
 
 if (isset($_GET['id'])){
   $data = getBookingRecordById($conn, $id);
@@ -35,6 +42,57 @@ if (isset($_GET['id'])){
 }
 
 
+/**
+ * WORKING ON THE UPDATE/EDIT FUNCTIONALITY
+*/
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+  if (isset($_POST['update'])){
+    $full_name = trim(filter_input(INPUT_POST, 'full_name'));
+    $email = trim(filter_input(INPUT_POST, 'email'));
+    $phone_number = trim(filter_input(INPUT_POST, 'phone_number'));
+    $room_type = trim(filter_input(INPUT_POST, 'room_type'));
+    $check_in_date = trim(filter_input(INPUT_POST, 'check_in_date'));
+    $check_out_date = trim(filter_input(INPUT_POST, 'check_out_date'));
+
+    if (!empty($full_name) && !empty($email) && !empty($phone_number) && !empty($room_type) && !empty($check_in_date) && !empty($check_out_date)) {
+
+      if ($image_file == '') {
+        $image_file = null;
+      }
+
+      $sql = "UPDATE booking_records
+        SET full_name = ?, email = ?, phone_number = ?, room_type = ?, check_in_date = ?, check_out_date = ?, image_file = ?
+        WHERE id = ?";
+
+        // prepare an SQL statement for execution
+      $stmt = mysqli_prepare($conn, $sql);
+
+      if ($stmt === false) {
+        echo mysqli_error($conn);
+      } else {
+
+        // bind variables for the parameter markers in the SQL statement prepared
+        mysqli_stmt_bind_param($stmt, 'sssssssi', $full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date, $image_file,$id);
+
+        //execute the prepared statement
+        $results = mysqli_stmt_execute($stmt);
+
+        if($results){
+          $_SESSION['success_message'] = "form updated successfully!";
+          header("Location: http://localhost:200/show.php?id=$id");
+          exit;
+        }
+
+      }
+      
+      }
+
+
+
+  }
+}
+
 ?>
 
 
@@ -59,18 +117,18 @@ if (isset($_GET['id'])){
 
             <form method="POST" enctype="multipart/form-data">
               <div class="mb-3 form-floating">
-                <input type="text" class="form-control" id="fullName" placeholder="Full Name" value="<?= $full_name ?>" required>
+                <input type="text" class="form-control" id="fullName" name="full_name" placeholder="Full Name" value="<?= $full_name ?>" required>
                 <label for="fullName">Full Name</label>
               </div>
 
               <div class="mb-3 form-floating">
-                <input type="email" class="form-control" id="email" placeholder="Email address" value="<?= $email ?>" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email address" value="<?= $email ?>" required>
                 <label for="email">Email address</label>
               </div>
 
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. 123-456-7890" value="<?= $phone_number ?>" required>
+                <input type="tel" class="form-control" id="phone" name="phone_number" placeholder="e.g. 123-456-7890" value="<?= $phone_number ?>" required>
               </div>
 
               <div class="mb-3">
@@ -89,24 +147,25 @@ if (isset($_GET['id'])){
                 </div>
 
               <div class="mb-3 form-floating">
-                <input type="date" class="form-control" id="checkin" placeholder="Check-in Date"  value="<?= $check_in_date ?>" required>
+                <input type="date" class="form-control" id="checkin" name="check_in_date" placeholder="Check-in Date"  value="<?= $check_in_date ?>" required>
                 <label for="checkin">Check-in Date</label>
               </div>
 
               <div class="mb-4 form-floating">
-                <input type="date" class="form-control" id="checkout" placeholder="Check-out Date"  value="<?= $check_out_date ?>" required>
+                <input type="date" class="form-control" id="checkout" name="check_out_date" placeholder="Check-out Date"  value="<?= $check_out_date ?>" required>
                 <label for="checkout">Check-out Date</label>
               </div>
 
               <!-- upload image-->
               <div class="mb-4">
                 <label for="file">Upload Image:</label>
-                <input type="file" name="file" id="file"  value="<?= $image_file ?>">
+                <input type="file" name="image_file" id="file"  value="<?= $image_file ?>">
               </div>
 
               <!-- submit button-->
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">Update Booking Record</button>
+              <div class="text-center">
+                <button type="submit" name="update" class="btn btn-primary px-5">Update Booking Record</button>
+                <a class="btn btn-secondary px-5" href="/index_records.php">Back</a>
               </div>
             </form>
 
