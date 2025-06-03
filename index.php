@@ -1,6 +1,9 @@
 <?php
 
+session_start();
+
 require_once "includes/db_connect.php";
+require_once "includes/auth.php";
 
 //initiate an erroro handler function
 function myErrorHandler($errno, $errstr)
@@ -14,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (isset($_POST['save'])) {
 
+    require_once "includes/file_upload.php";
+
     $full_name = trim(filter_input(INPUT_POST, 'full_name'));
     $email = trim(filter_input(INPUT_POST, 'email'));
     $phone_number = trim(filter_input(INPUT_POST, 'phone_number'));
@@ -23,9 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($full_name) && !empty($email) && !empty($phone_number) && !empty($room_type) && !empty($check_in_date) && !empty($check_out_date)) {
 
-      if ($image_file == '') {
-        $image_file = null;
-      }
 
       //connect to the database
       $conn = connectDB();
@@ -42,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       } else {
 
         // bind variables for the parameter markers in the SQL statement prepared
-        mysqli_stmt_bind_param($stmt, 'sssssss', $full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date, $image_file);
+       mysqli_stmt_bind_param($stmt, 'sssssss', $full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date, $image_file);
 
         //execute the prepared statement
         $results = mysqli_stmt_execute($stmt);
@@ -144,15 +146,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               <div class="mb-4">
                 <label for="file">Upload Image:</label>
-                <input type="file" id="file" name="image_file">
+                <input type="file" id="file" name="image_file" accept="image/*">
               </div>
 
               <div class="text-center">
                 <button type="submit" class="btn btn-primary px-5" name="save">Submit Booking</button>
+
+                <?php if(isLoggedIn()): ?>
                 <a href="/index_records.php" class="btn btn-dark px-5">View Booking Records</a>
+                <?php endif; ?>
+
               </div>
             </form>
 
+            <div class="py-3 text-center">
+              <?php if (isLoggedIn()): ?>
+                <p>You are logged in. <a href="logout.php">Logout</a>?</p>
+              <?php else: ?>
+                <p>Are you a staff? If yes, <a href="login.php">Login<a></p>
+              <?php endif; ?>
+            </div>
+          
           </div>
         </div>
       </div>

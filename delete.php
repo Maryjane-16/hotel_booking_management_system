@@ -2,10 +2,13 @@
 
 require_once "includes/db_connect.php";
 
+session_start();
+
 $id = $_GET['id'];
 
  //connect our db
 $conn = connectDB();
+
 
 if (isset($id)){
     $sql = "DELETE FROM booking_records WHERE id = ?";

@@ -1,10 +1,10 @@
 <?php
 
-require_once "includes/db_connect.php";
-require_once "includes/get_booking_record_id.php";
-
 session_start();
 
+require_once "includes/db_connect.php";
+require_once "includes/get_booking_record_id.php";
+require_once "includes/isloggedin.php";
 
 $id = $_GET['id'];
 
