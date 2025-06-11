@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="phone" class="form-label">Phone Number</label>
                 <input type="tel" class="form-control" id="phone" name="phone_number" placeholder="e.g. 123-456-7890" required>
               </div>
-               <div class="mb-3">
+              <div class="mb-3">
                 <label for="roomType" class="form-label">Room Type</label>
                 <input class="form-control" list="roomOptions" id="roomType" name="room_type" placeholder="Type to search..." required>
                 <datalist id="roomOptions">
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <option value="Executive Room">
                   <option value="Presidential Room">
                 </datalist>
-            </div>
+              </div>
               <div class="mb-3 form-floating">
                 <input type="date" class="form-control" id="checkin" name="check_in_date" placeholder="Check-in Date" required>
                 <label for="checkin">Check-in Date</label>

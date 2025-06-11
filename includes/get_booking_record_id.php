@@ -1,6 +1,7 @@
 <?php
 
-function getBookingRecordById($conn, $id){
+function getBookingRecordById($conn, $id)
+{
 
     // fetches a specific booking_records by its id
     $sql = "SELECT * FROM booking_records WHERE id = ?";

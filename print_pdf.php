@@ -11,7 +11,7 @@ require_once "includes/isloggedin.php";
 
 $id = $_GET['id'];
 
- //connect our db
+//connect our db
 $conn = connectDB();
 $data = getBookingRecordById($conn, $id);
 
@@ -20,24 +20,27 @@ ob_start();
 ?>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking Management System</title>
 </head>
+
 <body>
 
-<article>
-   <h2><?= htmlspecialchars($data['full_name']) ?></h2>
-    <p><b>ID: <?= htmlspecialchars($data['id']) ?></b></p>
-    <p>Email: <?= htmlspecialchars($data['email']) ?></p>
-    <p>Phone: <?= htmlspecialchars($data['phone_number']) ?></p>
-    <p>Room type: <?= htmlspecialchars($data['room_type']) ?></p>
-    <p>Check in date: <?= htmlspecialchars($data['check_in_date']) ?></p>
-    <p>Check out date: <?= htmlspecialchars($data['check_out_date']) ?></p>
-</article>
-    
+    <article>
+        <h2><?= htmlspecialchars($data['full_name']) ?></h2>
+        <p><b>ID: <?= htmlspecialchars($data['id']) ?></b></p>
+        <p>Email: <?= htmlspecialchars($data['email']) ?></p>
+        <p>Phone: <?= htmlspecialchars($data['phone_number']) ?></p>
+        <p>Room type: <?= htmlspecialchars($data['room_type']) ?></p>
+        <p>Check in date: <?= htmlspecialchars($data['check_in_date']) ?></p>
+        <p>Check out date: <?= htmlspecialchars($data['check_out_date']) ?></p>
+    </article>
+
 </body>
+
 </html>
 
 
@@ -59,7 +62,7 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream('output.pdf' , ['Attachment' => false]);
+$dompdf->stream('output.pdf', ['Attachment' => false]);
 
 
 ?>

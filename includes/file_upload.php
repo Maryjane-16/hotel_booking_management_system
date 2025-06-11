@@ -2,13 +2,13 @@
 
 try {
     // check if the file uploaded is greater than the post_max_size limit
-    if (empty($_FILES)){
+    if (empty($_FILES)) {
         throw new Exception("Invalid upload");
     }
 
-    switch ($_FILES['image_file']['error']){
+    switch ($_FILES['image_file']['error']) {
         case UPLOAD_ERR_OK;
-        break;
+            break;
         case UPLOAD_ERR_NO_FILE:
             throw new Exception("No file uploaded");
             break;
@@ -17,11 +17,11 @@ try {
             throw new Exception("File is too large");
             break;
         default:
-        throw new Exception("An error occured when uploading!");
+            throw new Exception("An error occured when uploading!");
     }
 
     // set the upload size limit to 10MB
-    if ($_FILES['image_file']['size'] > 10485760){
+    if ($_FILES['image_file']['size'] > 10485760) {
         throw new Exception("File size is too large!");
     }
     // specify the MIME type
@@ -30,14 +30,14 @@ try {
     $mime_type = finfo_file($finfo, $_FILES['image_file']['tmp_name']);
 
     // if the file is nto of any of the mime types specify
-    if (!in_array($mime_type, $mime_types)){
+    if (!in_array($mime_type, $mime_types)) {
         throw new Exception("Invalid file type uploaded.");
     }
 
     // ** Add this block for dimension check **
     list($width, $height) = getimagesize($_FILES['image_file']['tmp_name']);
     if ($width > 350 && $height > 200) {
-     throw new Exception("Invalid image dimensions. Required: 350x200 pixels.");
+        throw new Exception("Invalid image dimensions. Required: 350x200 pixels.");
     }
 
     // prevent filename from code injection
@@ -47,22 +47,19 @@ try {
     $base = preg_replace("/[^a-zA-Z0-9_-]/", "_", $base);
     // limits the filename to 100 characters max
     $base = mb_substr($base, 0, 100);
-    $image_file = $base . "." .$pathinfo['extension'];
+    $image_file = $base . "." . $pathinfo['extension'];
 
     $destination = "./uploads/$image_file";
 
     // check if the image_file already exists firsts, if it does, modify the name with numbers
     $i = 1;
-    while (file_exists($destination)){
+    while (file_exists($destination)) {
         $image_file = $base . "-$i." . $pathinfo['extension'];
         $destination = "./uploads/$image_file";
         $i++;
-
     }
     // move the file to the uploads dir inside our project
     move_uploaded_file($_FILES['image_file']['tmp_name'], $destination);
-
-
 } catch (Exception $e) {
     $error = $e->getMessage();
     echo $error;

@@ -2,37 +2,35 @@
 
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if (isset($_POST['login'])){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_POST['login'])) {
 
-        $username = htmlspecialchars($_POST['username']);
-        $password = htmlspecialchars($_POST['password']);
+    $username = htmlspecialchars($_POST['username']);
+    $password = htmlspecialchars($_POST['password']);
 
-        if($username == 'chinazormjay' && $password == 'chinazormjay123'){
+    if ($username == 'chinazormjay' && $password == 'chinazormjay123') {
 
-            // this helps prevent session fixation attacks
-            session_regenerate_id(true);
+      // this helps prevent session fixation attacks
+      session_regenerate_id(true);
 
-            $_SESSION['is_logged_in'] = true;
+      $_SESSION['is_logged_in'] = true;
 
-            header('Location: http://localhost:200/index_records.php');
-            exit;
-        }else{
+      header('Location: http://localhost:200/index_records.php');
+      exit;
+    } else {
 
-            $error = "Your login detail is incorrect";
-        }
-
-    
-
+      $error = "Your login detail is incorrect";
     }
+  }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -63,14 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
   </style>
 </head>
+
 <body>
 
   <div class="login-card">
     <h3 class="text-center mb-4">Login</h3>
 
     <?php if (!empty($error)): ?>
-        <p class="text-center text-danger"><?= $error ?> </p>
-        <?php endif; ?>
+      <p class="text-center text-danger"><?= $error ?> </p>
+    <?php endif; ?>
 
     <form method="POST">
       <div class="mb-3">
@@ -84,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       </div>
 
       <div class="d-flex justify-content-between">
-        <button type="submit"name="login" class="btn btn-primary">Login</button>
+        <button type="submit" name="login" class="btn btn-primary">Login</button>
         <a href="index.php" class="btn btn-secondary btn-back">Back</a>
       </div>
     </form>
@@ -92,4 +91,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

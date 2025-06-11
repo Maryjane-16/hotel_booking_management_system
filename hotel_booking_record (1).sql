@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2025 at 01:11 AM
+-- Generation Time: Jun 12, 2025 at 12:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,21 +56,18 @@ INSERT INTO `booking_records` (`id`, `full_name`, `email`, `phone_number`, `room
 
 CREATE TABLE `room_types` (
   `id` int(11) NOT NULL,
-  `names` varchar(255) NOT NULL
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `room_types`
 --
 
-INSERT INTO `room_types` (`id`, `names`) VALUES
-(3, 'Single_Room'),
-(4, 'Double_Room'),
+INSERT INTO `room_types` (`id`, `name`) VALUES
 (5, 'Suite'),
 (6, 'Family_Room'),
 (7, 'Deluxe'),
-(8, 'Executive_Room'),
-(9, 'Presidential_Room');
+(8, 'Executive_Room');
 
 --
 -- Indexes for dumped tables

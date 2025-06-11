@@ -10,17 +10,17 @@ require_once "includes/isloggedin.php";
  *  Reading out a specific data from the database
  */
 
- $id = $_GET['id'];
+$id = $_GET['id'];
 
- //connect our db
+//connect our db
 $conn = connectDB();
 $data = getBookingRecordById($conn, $id);
 
- // Download to PDF
- if (isset($_POST['download'])){
+// Download to PDF
+if (isset($_POST['download'])) {
   header("Location: http://localhost/Hotel_Booking_Management_System/print_pdf.php?id={$data['id']}");
   exit;
- }
+}
 
 ?>
 
@@ -43,19 +43,19 @@ $data = getBookingRecordById($conn, $id);
 
 
         <!--show success message -->
-            <?php if (isset($_SESSION['success_message'])): ?>
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= $_SESSION['success_message']; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-              <?php unset($_SESSION['success_message']); ?>
-            <?php endif; ?>
+        <?php if (isset($_SESSION['success_message'])): ?>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['success_message']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
 
         <!-- Booking Info -->
         <div class="row mb-3">
-              <img src="http://localhost/Hotel_Booking_Management_System/uploads/<?= htmlspecialchars($data['image_file']) ?>" alt="">
+          <img src="http://localhost/Hotel_Booking_Management_System/uploads/<?= htmlspecialchars($data['image_file']) ?>" alt="">
         </div>
-        
+
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Full Name:</strong>
@@ -95,17 +95,17 @@ $data = getBookingRecordById($conn, $id);
             </form>
           </div>
 
-        <!-- Action Buttons -->
-        <div class="d-flex justify-content-between mt-4">
-          <a href="index_records.php" class="btn btn-secondary btn-sm">Back</a>
-          <a href="delete.php?id=<?= $id ?>" class="btn btn-danger btn-sm">Delete</a>
-        </div>
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <a href="index_records.php" class="btn btn-secondary btn-sm">Back</a>
+            <a href="delete.php?id=<?= $id ?>" class="btn btn-danger btn-sm">Delete</a>
+          </div>
 
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

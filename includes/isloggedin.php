@@ -3,6 +3,6 @@
 require_once "auth.php";
 
 
-if (!isLoggedIn()){
+if (!isLoggedIn()) {
     die(require_once "unauthorized.php");
 }
