@@ -14,7 +14,7 @@ try {
             break;
         case UPLOAD_ERR_INI_SIZE:
             // file uploaded size is greater than the upload_max_size limit
-            throw new Exception("file is too large");
+            throw new Exception("File is too large");
             break;
         default:
         throw new Exception("An error occured when uploading!");
@@ -34,11 +34,17 @@ try {
         throw new Exception("Invalid file type uploaded.");
     }
 
+    // ** Add this block for dimension check **
+    list($width, $height) = getimagesize($_FILES['image_file']['tmp_name']);
+    if ($width > 350 && $height > 200) {
+     throw new Exception("Invalid image dimensions. Required: 350x200 pixels.");
+    }
+
     // prevent filename from code injection
     $pathinfo = pathinfo($_FILES['image_file']['name']);
     $base = $pathinfo['image_file'];
     // replace any characters that ain't proper letters, numbers or whatever
-    preg_replace("/[^a-zA-Z0-9_-]/", "_", $base);
+    $base = preg_replace("/[^a-zA-Z0-9_-]/", "_", $base);
     // limits the filename to 100 characters max
     $base = mb_substr($base, 0, 100);
     $image_file = $base . "." .$pathinfo['extension'];

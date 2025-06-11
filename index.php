@@ -4,6 +4,7 @@ session_start();
 
 require_once "includes/db_connect.php";
 require_once "includes/auth.php";
+require_once "includes/form_validate.php";
 
 //initiate an erroro handler function
 function myErrorHandler($errno, $errstr)
@@ -26,7 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $check_in_date = trim(filter_input(INPUT_POST, 'check_in_date'));
     $check_out_date = trim(filter_input(INPUT_POST, 'check_out_date'));
 
-    if (!empty($full_name) && !empty($email) && !empty($phone_number) && !empty($room_type) && !empty($check_in_date) && !empty($check_out_date)) {
+    // checking for empty fields and throwing an error if left empty
+    $errors = formValidation($full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date);
+
+    if (empty($errors)) {
 
 
       //connect to the database
@@ -44,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       } else {
 
         // bind variables for the parameter markers in the SQL statement prepared
-       mysqli_stmt_bind_param($stmt, 'sssssss', $full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date, $image_file);
+        mysqli_stmt_bind_param($stmt, 'sssssss', $full_name, $email, $phone_number, $room_type, $check_in_date, $check_out_date, $image_file);
 
         //execute the prepared statement
         $results = mysqli_stmt_execute($stmt);
@@ -56,9 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           exit;
         }
       }
-    } else {
-          header('Location: http://localhost:200/index.php?failure=1');
-          exit;
     }
   }
 }
@@ -96,9 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
 
             <!--show failure message -->
-            <?php if (isset($_GET['failure']) && $_GET['failure'] == 1): ?>
+            <?php if (!empty($errors)): ?>
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Booking submission failed!
+                <ul>
+                  <?php foreach ($errors as $error): ?>
+                    <li><?= $error ?></li>
+                  <?php endforeach; ?>
+                </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <?php endif; ?>
@@ -119,8 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="phone" class="form-label">Phone Number</label>
                 <input type="tel" class="form-control" id="phone" name="phone_number" placeholder="e.g. 123-456-7890" required>
               </div>
-
-              <div class="mb-3">
+               <div class="mb-3">
                 <label for="roomType" class="form-label">Room Type</label>
                 <input class="form-control" list="roomOptions" id="roomType" name="room_type" placeholder="Type to search..." required>
                 <datalist id="roomOptions">
@@ -132,8 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   <option value="Executive Room">
                   <option value="Presidential Room">
                 </datalist>
-              </div>
-
+            </div>
               <div class="mb-3 form-floating">
                 <input type="date" class="form-control" id="checkin" name="check_in_date" placeholder="Check-in Date" required>
                 <label for="checkin">Check-in Date</label>
@@ -146,14 +149,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               <div class="mb-4">
                 <label for="file">Upload Image:</label>
-                <input type="file" id="file" name="image_file" accept="image/*">
+                <input type="file" id="file" name="image_file" accept="image/*" onchange="checkImageResolution(event);">
               </div>
+              <div id="error-message" style="color: red"></div>
 
               <div class="text-center">
                 <button type="submit" class="btn btn-primary px-5" name="save">Submit Booking</button>
 
-                <?php if(isLoggedIn()): ?>
-                <a href="/index_records.php" class="btn btn-dark px-5">View Booking Records</a>
+                <?php if (isLoggedIn()): ?>
+                  <a href="/index_records.php" class="btn btn-dark px-5">View Booking Records</a>
                 <?php endif; ?>
 
               </div>
@@ -166,13 +170,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>Are you a staff? If yes, <a href="login.php">Login<a></p>
               <?php endif; ?>
             </div>
-          
+
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- checking image dimension to be uploaded-->
+  <script src="js/image_dimension.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -14,9 +14,13 @@ require_once "includes/isloggedin.php";
 
  //connect our db
 $conn = connectDB();
+$data = getBookingRecordById($conn, $id);
 
- $data = getBookingRecordById($conn, $id)
-
+ // Download to PDF
+ if (isset($_POST['download'])){
+  header("Location: http://localhost/Hotel_Booking_Management_System/print_pdf.php?id={$data['id']}");
+  exit;
+ }
 
 ?>
 
@@ -49,37 +53,47 @@ $conn = connectDB();
 
         <!-- Booking Info -->
         <div class="row mb-3">
+              <img src="http://localhost/Hotel_Booking_Management_System/uploads/<?= htmlspecialchars($data['image_file']) ?>" alt="">
+        </div>
+        
+        <div class="row mb-3">
           <div class="col-md-6">
             <strong>Full Name:</strong>
-            <p><?= $data['full_name'] ?></p>
+            <p><?= htmlspecialchars($data['full_name']) ?></p>
           </div>
           <div class="col-md-6">
             <strong>Email:</strong>
-            <p><?= $data['email'] ?></p>
+            <p><?= htmlspecialchars($data['email']) ?></p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Phone:</strong>
-            <p><?= $data['phone_number'] ?></p>
+            <p><?= htmlspecialchars($data['phone_number']) ?></p>
           </div>
           <div class="col-md-6">
             <strong>Room Type:</strong>
-            <p><?= $data['room_type'] ?></p>
+            <p><?= htmlspecialchars($data['room_type']) ?></p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
             <strong>Check-in Date:</strong>
-            <p><?= $data['check_in_date'] ?></p>
+            <p><?= htmlspecialchars($data['check_in_date']) ?></p>
           </div>
           <div class="col-md-6">
             <strong>Check-out Date:</strong>
-            <p><?= $data['check_out_date'] ?></p>
+            <p><?= htmlspecialchars($data['check_out_date']) ?></p>
           </div>
         </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <form method="POST">
+              <button type="submit" name="download">Download PDF</button>
+            </form>
+          </div>
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-between mt-4">
