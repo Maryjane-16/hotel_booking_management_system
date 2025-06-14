@@ -58,7 +58,6 @@ if (isset($_POST['clear_booking_records'])) {
                             <tr>
                                 <th>#</th>
                                 <th>Full Name</th>
-                                <th>Room Type</th>
                                 <th>Check_in Date</th>
                                 <th>Check_out Date</th>
                                 <th>Photos</th>
@@ -74,7 +73,6 @@ if (isset($_POST['clear_booking_records'])) {
                                     <tr>
                                         <td><?= htmlspecialchars($data['id']) ?></td>
                                         <td><?= htmlspecialchars($data['full_name']) ?></td>
-                                        <td><?= htmlspecialchars($data['room_type']) ?></td>
                                         <td><?= htmlspecialchars($data['check_in_date']) ?></td>
                                         <td><?= htmlspecialchars($data['check_out_date']) ?></td>
                                         <td>
@@ -113,10 +111,12 @@ if (isset($_POST['clear_booking_records'])) {
                     </table>
                 </div>
                 <!-- Footer Buttons -->
-                <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="/index.php" class="btn btn-sm btn-success">Create New Booking</a>
-                    <form method="POST">
 
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="/room_types.php" class="btn btn-sm btn-info">Room Type</a>
+                    <a href="/index.php" class="btn btn-sm btn-success">Create New Booking</a>
+
+                    <form method="POST">
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -134,15 +134,18 @@ if (isset($_POST['clear_booking_records'])) {
                                         <button type="submit" name="clear_booking_records" class="btn btn-sm btn-primary">YES, Delete!</button>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-                    </form>
-
                 </div>
+
+                </form>
+
             </div>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2025 at 12:16 AM
+-- Generation Time: Jun 14, 2025 at 07:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,8 @@ INSERT INTO `booking_records` (`id`, `full_name`, `email`, `phone_number`, `room
 (5, 'Maryjane Chinazor', 'okwuazichinazor@gmail.com', 2147483647, 'Deluxe', '2025-06-12', '2025-06-24', '-13.jpg'),
 (6, 'Gladys Adanne', 'adanne@gmail.com', 2147483647, 'Family Room', '2025-06-05', '2025-06-11', '-14.jpg'),
 (8, 'Maryjane Chinazor Okwuazi', 'okwuazichinazor@gmail.com', 2147483647, 'Executive Room', '2025-06-05', '2025-06-20', '-16.jpg'),
-(9, 'Lexis Alexander', 'lexiscode@gmail.com', 2147483647, 'Suite', '2025-06-13', '2025-06-28', '-17.jpg');
+(9, 'Lexis Alexander', 'lexiscode@gmail.com', 2147483647, 'Suite', '2025-06-13', '2025-06-28', '-17.jpg'),
+(10, 'Maryjane Chy', 'okwuazichinazor@gmail.com', 2147483647, 'Executive Room', '2025-06-20', '2025-06-30', '-18.jpg');
 
 -- --------------------------------------------------------
 
@@ -56,18 +57,23 @@ INSERT INTO `booking_records` (`id`, `full_name`, `email`, `phone_number`, `room
 
 CREATE TABLE `room_types` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `room_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `room_types`
 --
 
-INSERT INTO `room_types` (`id`, `name`) VALUES
-(5, 'Suite'),
-(6, 'Family_Room'),
+INSERT INTO `room_types` (`id`, `room_type`) VALUES
 (7, 'Deluxe'),
-(8, 'Executive_Room');
+(8, 'Presidential Room'),
+(10, 'Deluxe'),
+(11, 'Family Room'),
+(13, 'Double room'),
+(15, 'Executive Room'),
+(16, 'Executive Room'),
+(17, 'single room'),
+(18, 'Suite');
 
 --
 -- Indexes for dumped tables
@@ -93,13 +99,13 @@ ALTER TABLE `room_types`
 -- AUTO_INCREMENT for table `booking_records`
 --
 ALTER TABLE `booking_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `room_types`
 --
 ALTER TABLE `room_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
