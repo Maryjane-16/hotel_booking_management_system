@@ -116,16 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
               <div class="mb-3">
                 <label for="roomType" class="form-label">Room Types</label>
-                <select class="form-control" id="roomType" name="room_type" required>
-
-                  <?php
-                  $Room_types = ['Single Room', 'Double Room', 'Suite', 'Family Room', 'Deluxe', 'Executive Room', 'Presidential Room'];
-
-                  foreach ($Room_types as $room) {
-                    $selected = ($room === $room_type) ? 'selected' : '';
-                    echo "<option value='$room' $selected>$room</option>";
-                  }
-                  ?>
+                <input type="text" class="form-control" id="roomType" name="room_type"
+                value="<?= htmlspecialchars($room_type) ?>" placeholder="Enter or edit room type" required>
                 </select>
               </div>
 

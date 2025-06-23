@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2025 at 07:48 AM
+-- Generation Time: Jun 23, 2025 at 04:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `booking_records` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `phone_number` int(11) NOT NULL,
+  `phone_number` varchar(11) NOT NULL,
   `room_type` varchar(255) NOT NULL,
   `check_in_date` date NOT NULL,
   `check_out_date` date NOT NULL,
@@ -43,11 +43,10 @@ CREATE TABLE `booking_records` (
 --
 
 INSERT INTO `booking_records` (`id`, `full_name`, `email`, `phone_number`, `room_type`, `check_in_date`, `check_out_date`, `image_file`) VALUES
-(5, 'Maryjane Chinazor', 'okwuazichinazor@gmail.com', 2147483647, 'Deluxe', '2025-06-12', '2025-06-24', '-13.jpg'),
-(6, 'Gladys Adanne', 'adanne@gmail.com', 2147483647, 'Family Room', '2025-06-05', '2025-06-11', '-14.jpg'),
-(8, 'Maryjane Chinazor Okwuazi', 'okwuazichinazor@gmail.com', 2147483647, 'Executive Room', '2025-06-05', '2025-06-20', '-16.jpg'),
-(9, 'Lexis Alexander', 'lexiscode@gmail.com', 2147483647, 'Suite', '2025-06-13', '2025-06-28', '-17.jpg'),
-(10, 'Maryjane Chy', 'okwuazichinazor@gmail.com', 2147483647, 'Executive Room', '2025-06-20', '2025-06-30', '-18.jpg');
+(11, 'Maryjane Chinazor Okwuazi', 'okwuazichinazor@gmail.com', '08037991011', 'Presidential Room', '2025-06-10', '2025-06-20', '-19.jpg'),
+(12, 'Lexis Alexander', 'lexiscode@gmail.com', '09045893476', 'Executive Room', '2025-06-20', '2025-06-30', '-20.jpg'),
+(13, 'Gladys Adanne', 'adanne@gmail.com', '08067895432', 'Suite', '2025-06-27', '2025-07-04', '-21.jpg'),
+(14, 'Maryjane Chinazor', 'okwuazichinazor@gmail.com', '08037991011', 'Suite', '2025-06-08', '2025-06-23', '-22.jpg');
 
 -- --------------------------------------------------------
 
@@ -65,15 +64,12 @@ CREATE TABLE `room_types` (
 --
 
 INSERT INTO `room_types` (`id`, `room_type`) VALUES
-(7, 'Deluxe'),
+(7, 'Family Room'),
 (8, 'Presidential Room'),
 (10, 'Deluxe'),
-(11, 'Family Room'),
 (13, 'Double room'),
 (15, 'Executive Room'),
-(16, 'Executive Room'),
-(17, 'single room'),
-(18, 'Suite');
+(22, 'Single Room');
 
 --
 -- Indexes for dumped tables
@@ -99,13 +95,13 @@ ALTER TABLE `room_types`
 -- AUTO_INCREMENT for table `booking_records`
 --
 ALTER TABLE `booking_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `room_types`
 --
 ALTER TABLE `room_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

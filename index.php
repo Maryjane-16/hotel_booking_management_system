@@ -126,17 +126,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
               <div class="mb-3">
                 <label for="roomType" class="form-label">Room Type</label>
-                <input class="form-control" list="roomOptions" id="roomType" name="room_type" placeholder="Type to search..." required>
-                <datalist id="roomOptions">
-                  <option value="Single Room">
-                  <option value="Double Room">
-                  <option value="Suite">
-                  <option value="Family Room">
-                  <option value="Deluxe">
-                  <option value="Executive Room">
-                  <option value="Presidential Room">
-                </datalist>
+                <select class="form-select" id="roomType" name="room_type" required>
+                      <option value="Single Room">Single Room</option>
+                      <option value="Double Room" selected>Double Room</option>
+                      <option value="Suite">Suite</option>
+                      <option value="Family Room">Family Room</option>
+                      <option value="Deluxe">Deluxe</option>
+                      <option value="Executive Room">Executive Room</option>
+                      <option value="Presidential Room">Presidential Room</option>
+                    </select>
+                </select>
               </div>
+
               <div class="mb-3 form-floating">
                 <input type="date" class="form-control" id="checkin" name="check_in_date" placeholder="Check-in Date" required>
                 <label for="checkin">Check-in Date</label>
