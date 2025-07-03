@@ -62,7 +62,7 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream('output.pdf', ['Attachment' => false]);
+$dompdf->stream('output.pdf', ['Attachment' => true]);
 
 
 ?>

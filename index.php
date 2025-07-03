@@ -6,6 +6,14 @@ require_once "includes/db_connect.php";
 require_once "includes/auth.php";
 require_once "includes/form_validate.php";
 
+//connect to the database
+$conn = connectDB();
+// Fetch room types from the database
+$sql = "SELECT * FROM room_types";
+$result = mysqli_query($conn, $sql);
+$room_types = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
 //initiate an erroro handler function
 function myErrorHandler($errno, $errstr)
 {
@@ -33,8 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
 
 
-      //connect to the database
-      $conn = connectDB();
 
       // insert the data into the database
       $sql = "INSERT INTO booking_records (full_name, email, phone_number, room_type, check_in_date, check_out_date, image_file)
@@ -127,14 +133,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="mb-3">
                 <label for="roomType" class="form-label">Room Type</label>
                 <select class="form-select" id="roomType" name="room_type" required>
-                      <option value="Single Room">Single Room</option>
-                      <option value="Double Room" selected>Double Room</option>
-                      <option value="Suite">Suite</option>
-                      <option value="Family Room">Family Room</option>
-                      <option value="Deluxe">Deluxe</option>
-                      <option value="Executive Room">Executive Room</option>
-                      <option value="Presidential Room">Presidential Room</option>
-                    </select>
+                  <?php foreach ($room_types as $room_type): ?>
+                    <option value="<?= $room_type['room_type'] ?>"><?= $room_type['room_type'] ?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
 

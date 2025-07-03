@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2025 at 04:10 PM
+-- Generation Time: Jul 04, 2025 at 12:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,9 +44,9 @@ CREATE TABLE `booking_records` (
 
 INSERT INTO `booking_records` (`id`, `full_name`, `email`, `phone_number`, `room_type`, `check_in_date`, `check_out_date`, `image_file`) VALUES
 (11, 'Maryjane Chinazor Okwuazi', 'okwuazichinazor@gmail.com', '08037991011', 'Presidential Room', '2025-06-10', '2025-06-20', '-19.jpg'),
-(12, 'Lexis Alexander', 'lexiscode@gmail.com', '09045893476', 'Executive Room', '2025-06-20', '2025-06-30', '-20.jpg'),
-(13, 'Gladys Adanne', 'adanne@gmail.com', '08067895432', 'Suite', '2025-06-27', '2025-07-04', '-21.jpg'),
-(14, 'Maryjane Chinazor', 'okwuazichinazor@gmail.com', '08037991011', 'Suite', '2025-06-08', '2025-06-23', '-22.jpg');
+(12, 'Lexis Alexander', 'lexiscode@gmail.com', '09045893476', 'Single Room', '2025-06-20', '2025-06-30', '-20.jpg'),
+(13, 'Gladys Adanne', 'adanne@gmail.com', '08067895432', 'Double Room', '2025-06-27', '2025-07-04', '-21.jpg'),
+(14, 'Maryjane Chinazor', 'okwuazichinazor@gmail.com', '08037991011', 'Family Room', '2025-06-08', '2025-06-23', '-22.jpg');
 
 -- --------------------------------------------------------
 
@@ -64,12 +64,12 @@ CREATE TABLE `room_types` (
 --
 
 INSERT INTO `room_types` (`id`, `room_type`) VALUES
-(7, 'Family Room'),
 (8, 'Presidential Room'),
 (10, 'Deluxe'),
 (13, 'Double room'),
 (15, 'Executive Room'),
-(22, 'Single Room');
+(22, 'Single Room'),
+(27, 'Family Room');
 
 --
 -- Indexes for dumped tables
@@ -95,13 +95,13 @@ ALTER TABLE `room_types`
 -- AUTO_INCREMENT for table `booking_records`
 --
 ALTER TABLE `booking_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `room_types`
 --
 ALTER TABLE `room_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
